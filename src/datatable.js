@@ -38,12 +38,17 @@ class Table extends React.Component {
             this.adjustScroll()
             this.state.updateScroll = false
         }
+        if(this.props.rows.length === 0) {
+            this.state.begin = 0
+            this.state.end = 100
+        }
     }
 
     adjustScroll() {
         let tableBody = document.querySelector('#data-table tbody')
+        let indexToView = Math.floor((this.state.end - this.state.begin) / 2)
         if (tableBody) {
-            const elementToView = tableBody.rows[Math.floor((this.state.end - this.state.begin) / 2)]
+            const elementToView = tableBody.rows[indexToView]
             if (elementToView) {
                 elementToView.scrollIntoView(false)
             }
