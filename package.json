@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config=webpack.config.js --watch",
-    "start": "node server.js"
+    "build": "webpack --config=webpack.config.js",
+    "start": "node server.js",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -21,10 +21,22 @@
     "webpack": "^4.41.5"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.8.0",
+    "babel-jest": "^24.9.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "jest": "^24.9.0",
+    "jsdom": "^15.2.1",
     "webpack-cli": "^3.3.10"
   },
   "directories": {
     "test": "test"
   },
-  "description": ""
+  "description": "",
+  "jest": {
+    "verbose": true,
+    "setupFilesAfterEnv": [
+      "<rootDir>\\test\\testSetup.js"
+    ]
+  }
 }

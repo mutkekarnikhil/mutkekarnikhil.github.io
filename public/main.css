@@ -1,4 +1,4 @@
-.data-table {
+.data-table-container {
     border: 10px solid #f0f0f0;
     border-radius: 5px;
     display: flex;
@@ -47,6 +47,7 @@
     width: 100%;
 }
 
+.table-content .table-header-row,
 .table-content .table-row {
     display: table;
 }
@@ -89,7 +90,7 @@
     display: table;
 }
 
-.data-table .no-records {
+.data-table-container .no-records {
     padding: 20px;
     text-align: center;
     color: gray;

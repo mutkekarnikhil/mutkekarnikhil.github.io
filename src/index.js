@@ -14,10 +14,8 @@ export default class App extends React.Component {
             loadingOpen: false,
         }
         this.allData = []
-        this.filterRowsBasedOnTitle = this.filterRowsBasedOnTitle.bind(this)
-        this.onFilterColumnSelect = this.onFilterColumnSelect.bind(this)
     }
-    
+
     componentWillMount() {
         this.setState({ loadingOpen: true})
         fetch('https://jsonplaceholder.typicode.com/photos')
@@ -38,7 +36,7 @@ export default class App extends React.Component {
         })
     }
     
-    getColumnObject() {
+    getColumnObject = () => {
         return [{
             id: 'select-checkbox',
             label: '',
@@ -62,7 +60,7 @@ export default class App extends React.Component {
         }]
     }
 
-    filterRowsBasedOnTitle(value) {
+    onSelectionChange = (value) => {
         this.filteredText = value
         if (this.filteredText) {
             this.setState({
@@ -75,18 +73,18 @@ export default class App extends React.Component {
         }
     }
 
-    onFilterColumnSelect(selectedColumn) {
+    onFilterColumnSelect = (selectedColumn) => {
         this.setState({
             filterColumn: {
                 value: selectedColumn.value,
                 label: selectedColumn.selectedOptions[0].label
             }
         }, () => {
-            this.filterRowsBasedOnTitle(this.filteredText)
+            this.onSelectionChange(this.filteredText)
         })
     }
     
-    onRowClick(rowData, rowIndex) {
+    onRowClick = (rowData, rowIndex) => {
         console.log(`Selected Row Data:`, rowData, `Row Index: ${rowIndex}`)
     }
 
@@ -96,7 +94,7 @@ export default class App extends React.Component {
                 <DataTable
                     columns={this.getColumnObject()}
                     rows={this.state.rowData}
-                    filterRowsBasedOnTitle={this.filterRowsBasedOnTitle}
+                    onSelectionChange={this.onSelectionChange}
                     onRowClick={this.onRowClick}
                     filterColumn={this.state.filterColumn.label}
                     onFilterColumnSelect={this.onFilterColumnSelect}
