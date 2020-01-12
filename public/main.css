@@ -1,7 +1,9 @@
 .data-table {
     border: 10px solid #f0f0f0;
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
+    width: fit-content;
 }
 
 .filter-container {
@@ -9,21 +11,44 @@
     flex-direction: row;
     height: 30px;
     padding: 15px;
+    margin-top: 10px;
 }
+
 .select-filter {
     flex: 0 0 auto;
     background-color: #f8f8f8;
 }
+
 .input-filter {
     flex: 1 0 auto;
     outline: none;
     padding: 3px 7px;
+    border: 1px solid lightgray;
 }
 
 .table-content {
     flex: 1 0 auto;
     margin: 15px;
-    border-collapse: collapse;;
+    border-collapse: collapse;
+}
+
+.table-content tbody {
+    overflow-y: overlay;
+    overflow-x: hidden;
+    display: block;
+    height: 60vh;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.table-content tfoot {
+    display: table;
+    margin-top: 15px;
+    font-size: 12px;
+    width: 100%;
+}
+
+.table-content .table-row {
+    display: table;
 }
 
 .table-content th {
@@ -33,10 +58,26 @@
 }
 
 .table-content .th-thumbnail,
-.table-content .td-thumbnail,
 .table-content .th-select-checkbox,
+.table-content .td-thumbnail,
 .table-content .td-select-checkbox {
-    width: 40px;
+    width: 3vw;
+}
+
+.table-content .th-title,
+.table-content .td-title {
+    width: 48vw;
+}
+
+.table-content .th-url,
+.table-content .td-url {
+    width: 30vw;
+}
+
+.table-content .th-albumId,
+.table-content .td-albumId {
+    width: 12vw;
+    text-align: center;
 }
 
 .table-content td {
@@ -44,11 +85,37 @@
     border-bottom: 1px solid #e8e8e8;
 }
 
-.table-content .td-albumId {
-    text-align: center;
+.table-content .ta  ble-row {
+    display: table;
 }
 
 .data-table .no-records {
     padding: 20px;
     text-align: center;
+    color: gray;
+}
+
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    text-align: center;
+}
+
+.spinner svg {
+    animation-name: spin;
+    animation-duration: 2000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }

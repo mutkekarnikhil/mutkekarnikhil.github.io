@@ -2,20 +2,24 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import DataTable from './datatable'
+import Spinner from './spinner'
+
 
 export default class App extends React.Component {
     constructor() {
         super()
         this.state = {
             rowData: [],
-            filterColumn: {label: 'Title', value: 'title'}
+            filterColumn: { label: 'Title', value: 'title' },
+            loadingOpen: false,
         }
         this.allData = []
         this.filterRowsBasedOnTitle = this.filterRowsBasedOnTitle.bind(this)
         this.onFilterColumnSelect = this.onFilterColumnSelect.bind(this)
     }
-
+    
     componentWillMount() {
+        this.setState({ loadingOpen: true})
         fetch('https://jsonplaceholder.typicode.com/photos')
         .then(response => {
             if (response.status !== 200) {
@@ -26,17 +30,20 @@ export default class App extends React.Component {
         })
         .then((responseData) => {
             if (!responseData) return
-            this.allData = responseData.slice(0,100)
-            this.setState({ rowData: this.allData })
+            this.allData = responseData
+            this.setState({
+                rowData: this.allData,
+                loadingOpen: false
+            })
         })
     }
-
+    
     getColumnObject() {
         return [{
             id: 'select-checkbox',
             label: '',
             numeric: false
-        },{
+        }, {
             id: 'thumbnail',
             label: '',
             numeric: false,
@@ -57,7 +64,7 @@ export default class App extends React.Component {
 
     filterRowsBasedOnTitle(value) {
         this.filteredText = value
-        if(this.filteredText) {
+        if (this.filteredText) {
             this.setState({
                 rowData: this.allData.filter(row => row[this.state.filterColumn.value].toString().includes(this.filteredText))
             })
@@ -69,7 +76,7 @@ export default class App extends React.Component {
     }
 
     onFilterColumnSelect(selectedColumn) {
-        this.setState({ 
+        this.setState({
             filterColumn: {
                 value: selectedColumn.value,
                 label: selectedColumn.selectedOptions[0].label
@@ -78,21 +85,25 @@ export default class App extends React.Component {
             this.filterRowsBasedOnTitle(this.filteredText)
         })
     }
-
+    
     onRowClick(rowData, rowIndex) {
-        console.log(rowData, rowIndex)
+        console.log(`Selected Row Data:`, rowData, `Row Index: ${rowIndex}`)
     }
 
     render() {
         return (
-            <DataTable
-                columns={this.getColumnObject()}
-                rows={this.state.rowData}
-                filterRowsBasedOnTitle={this.filterRowsBasedOnTitle}
-                onRowClick={this.onRowClick}
-                filterColumn={this.state.filterColumn.label}
-                onFilterColumnSelect={this.onFilterColumnSelect}
-            />
+            !this.state.loadingOpen ? (
+                <DataTable
+                    columns={this.getColumnObject()}
+                    rows={this.state.rowData}
+                    filterRowsBasedOnTitle={this.filterRowsBasedOnTitle}
+                    onRowClick={this.onRowClick}
+                    filterColumn={this.state.filterColumn.label}
+                    onFilterColumnSelect={this.onFilterColumnSelect}
+                    />
+            ) : (
+                <Spinner />
+            )
         )
     }
 }
