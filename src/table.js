@@ -10,17 +10,20 @@ export default class Table extends React.Component {
             updateScroll: false
         }
     }
+
     componentDidUpdate() {
         if (this.state.updateScroll) {
             this.adjustScroll()
             this.state.updateScroll = false
         }
+        // If there are no rows to be displayed, reset begin and end count to default
         if(this.props.rows.length === 0) {
             this.state.begin = 0
             this.state.end = 100
         }
     }
 
+    // This function adjusts scroll in such a way that infinite scrolling experience can be bettered, and row element is brought into view
     adjustScroll = () => {
         let tableBody = document.querySelector('#data-table tbody')
         let indexToView = Math.floor((this.state.end - this.state.begin) / 2)
@@ -32,6 +35,7 @@ export default class Table extends React.Component {
         }
     }
 
+    // This is handler function called when user scrolls through Table body.
     scrollHandler = () => {
         let tableBody = document.querySelector('#data-table tbody')
         let scrollDirection = ''
@@ -73,7 +77,7 @@ export default class Table extends React.Component {
             }
         }
         this.state.updateScroll = true
-        this.setState(this.state)
+        this.setState(this.state) // Force render so that list is updated to fetch next set of rows for infinite scrolling
     }
 
     render() {

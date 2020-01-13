@@ -60,6 +60,8 @@ export default class App extends React.Component {
         }]
     }
 
+    // Callback function when user types text in filter input
+    // This function filters results based on filterText and returns filtered array of rows
     onSelectionChange = (value) => {
         this.filteredText = value
         if (this.filteredText) {
@@ -73,6 +75,7 @@ export default class App extends React.Component {
         }
     }
 
+    // Callback function when user changes filter option from filter dropdown
     onFilterColumnSelect = (selectedColumn) => {
         this.setState({
             filterColumn: {
@@ -84,6 +87,8 @@ export default class App extends React.Component {
         })
     }
     
+    // Callback function when user clicks on row from the table
+    // Displays rowData and Index number in the console.
     onRowClick = (rowData, rowIndex) => {
         console.log(`Selected Row Data:`, rowData, `Row Index: ${rowIndex}`)
     }
@@ -98,7 +103,7 @@ export default class App extends React.Component {
                     onRowClick={this.onRowClick}
                     filterColumn={this.state.filterColumn.label}
                     onFilterColumnSelect={this.onFilterColumnSelect}
-                    />
+                />
             ) : (
                 <Spinner />
             )
